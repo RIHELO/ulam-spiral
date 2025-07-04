@@ -65,8 +65,8 @@ def plot_clockwise_spiral_with_primes(starting_prime, n):
   probability = diagonal_primes_count / total_diagonal_elements if total_diagonal_elements > 0 else 0
 
   plt.figure(figsize=(10, 10))
-  plt.scatter(x_nonprimes, y_nonprimes, c='blue', label='Non-primes')
-  plt.scatter(x_primes, y_primes, c='red', label='Primes')
+  plt.scatter(x_nonprimes, y_nonprimes, c='blue', label='Non-primes',s=10)
+  plt.scatter(x_primes, y_primes, c='red', label='Primes',s=10)
   probability_text = f"Probability of primes on diagonal: {probability:.2f}"
   plt.text(0.5, 1.05, probability_text, ha='center', va='center', transform=plt.gca().transAxes, fontsize=12, bbox=dict(facecolor='white', alpha=0.5))
 
@@ -81,7 +81,7 @@ def main():
     
     # Add parameters
     parser.add_argument("--initial", type=str, required=True, help="Initial prime number")
-    parser.add_argument("--max", type=int, default=40000,  help="Max numbers to plot")
+    parser.add_argument("--max", type=int, default=100000,  help="Max numbers to plot")
 
     args = parser.parse_args()
 
