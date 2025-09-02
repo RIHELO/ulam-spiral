@@ -32,3 +32,13 @@ Plot Prime Density vs Initial Values
 ```
 python3 value_percentage.py
 ```
+
+Plot functions with initial value
+```
+python3 fplot.py 41
+python3 fplot.py 55661
+python3 fplot.py 27941
+python3 fplot.py 733939
+```
+
+
