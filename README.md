@@ -21,3 +21,10 @@ To sort by the highest probability:
 sort -r primes.txt|head 
 ```
 
+Plot Ulam spiral with different initial values
+```
+python3 plot_ulam.py --initial 41
+python3 plot_ulam.py --initial 55661 
+python3 plot_ulam.py --initial 27941 
+python3 plot_ulam.py --initial 733939
+```
