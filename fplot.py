@@ -28,10 +28,12 @@ def plot_function_with_primes(start_value):
     # Labels and legend
     plt.xlabel('x')
     plt.ylabel('f(x)')
-    plt.title(f'Plot of f(x) = {start_value} + x + x² with Prime Values Highlighted')
+    #plt.title(f'Plot of f(x) = {start_value} + x + x² with Prime Values Highlighted')
     plt.legend()
     plt.grid(True)
     plt.tight_layout()
+    plt.savefig(f"poly_{start_value}.pdf", bbox_inches="tight")
+#    plt.savefig(f"poly_{start_value}.svg", bbox_inches="tight")
     plt.show()
 
 if __name__ == "__main__":
