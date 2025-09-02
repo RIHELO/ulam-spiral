@@ -13,14 +13,12 @@ plt.figure(figsize=(10, 6))
 scatter = plt.scatter(df['Value'], df['Percentage'], c=df['Percentage'], cmap=cmap, norm=norm, s=10)
 
 # Labels and title
-plt.xlabel('Value')
-plt.ylabel('Percentage')
-plt.title('Value vs Percentage (Color Intensity by Percentage)')
+plt.xlabel('Initial Value')
+plt.ylabel('Prime Density Percentage')
 plt.grid(True)
 
-# Add colorbar using the scatter object
-plt.colorbar(scatter, label='Percentage')
+plt.savefig(f"prime_density.pdf", bbox_inches="tight")
+plt.savefig(f"prime_density.svg", bbox_inches="tight")
 
 plt.tight_layout()
 plt.show()
-
