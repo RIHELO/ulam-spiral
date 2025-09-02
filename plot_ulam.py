@@ -3,89 +3,94 @@ import sympy
 import argparse
 
 
-def generate_clockwise_spiral_coords(num,n):
- coords = {}
- x, y = 0, 0
- coords[(x, y)] = num
- num += 1 
- layer = 1
-
- while num <= n:
-   # UP
-   y += 1
-   coords[(x, y)] = num
-   num += 1
-   if num > n: return coords
-  
-   # RIGHT
-   for _ in range(layer):
-    x += 1
+def generate_clockwise_spiral_coords(num, n):
+    coords = {}
+    x, y = 0, 0
     coords[(x, y)] = num
     num += 1
-    if num > n: return coords
-   
-   # DOWN
-   for _ in range(layer):
-    y -= 1
-    coords[(x, y)] = num
-    num += 1
-    if num > n: return coords
+    layer = 1
 
-   y = layer
-   layer += 1
-   x = 0
+    while num <= n:
+        # UP
+        y += 1
+        coords[(x, y)] = num
+        num += 1
+        if num > n:
+            return coords
 
- return coords
+        # RIGHT
+        for _ in range(layer):
+            x += 1
+            coords[(x, y)] = num
+            num += 1
+            if num > n:
+                return coords
 
-def plot_clockwise_spiral_with_primes(starting_prime, n):
-  coords = generate_clockwise_spiral_coords(starting_prime, n+starting_prime)
-  prime_set = set(sympy.primerange(starting_prime, n + starting_prime))
+        # DOWN
+        for _ in range(layer):
+            y -= 1
+            coords[(x, y)] = num
+            num += 1
+            if num > n:
+                return coords
 
-  x_primes, y_primes = [], []
-  x_nonprimes, y_nonprimes = [], []
+        y = layer
+        layer += 1
+        x = 0
 
-  for (x, y), val in coords.items():
-    if val in prime_set:
-      x_primes.append(x)
-      y_primes.append(y)
-    else:
-      x_nonprimes.append(x)
-      y_nonprimes.append(y)
+    return coords
 
-  diagonal_primes_count = 0
-  total_diagonal_elements = 0
 
-  for (x, y), val in coords.items():
-    if x == y:  # Check if the coordinate is on the diagonal
-        total_diagonal_elements += 1
+def plot_clockwise_spiral_with_primes(starting_prime, n, outname="spiral"):
+    coords = generate_clockwise_spiral_coords(starting_prime, n + starting_prime)
+    prime_set = set(sympy.primerange(starting_prime, n + starting_prime))
+
+    x_primes, y_primes = [], []
+    x_nonprimes, y_nonprimes = [], []
+
+    for (x, y), val in coords.items():
         if val in prime_set:
-            diagonal_primes_count += 1
+            x_primes.append(x)
+            y_primes.append(y)
+        else:
+            x_nonprimes.append(x)
+            y_nonprimes.append(y)
 
-  # Calculate the probability
-  probability = diagonal_primes_count / total_diagonal_elements if total_diagonal_elements > 0 else 0
+    # Count diagonal primes
+    diagonal_primes_count = 0
+    total_diagonal_elements = 0
+    for (x, y), val in coords.items():
+        if x == y:
+            total_diagonal_elements += 1
+            if val in prime_set:
+                diagonal_primes_count += 1
 
-  plt.figure(figsize=(10, 10))
-  plt.scatter(x_nonprimes, y_nonprimes, c='blue', label='Non-primes',s=10)
-  plt.scatter(x_primes, y_primes, c='red', label='Primes',s=10)
-  probability_text = f"Probability of primes on diagonal: {probability:.2f}"
-  plt.text(0.5, 1.05, probability_text, ha='center', va='center', transform=plt.gca().transAxes, fontsize=12, bbox=dict(facecolor='white', alpha=0.5))
+    probability = diagonal_primes_count / total_diagonal_elements if total_diagonal_elements > 0 else 0
 
-  plt.title(f"Initial prime {starting_prime} Clockwise Ulam Spiral Pattern up to {n} with Primes Highlighted")
-  plt.axis('equal')
-  plt.grid(True)
-  plt.legend()
-  plt.show()
+    # Plot
+    plt.figure(figsize=(10, 10))
+    plt.scatter(x_nonprimes, y_nonprimes, c='lightgray', s=8, label="Non-primes")
+    plt.scatter(x_primes, y_primes, c='red', s=8, label="Primes")
+
+    plt.title(f"Ulam Spiral starting at {starting_prime}\nDiagonal prime density = {probability:.2f}")
+    plt.axis("equal")
+    plt.axis("off")
+    plt.legend(loc="upper right")
+
+    # Save as PDF + SVG for publication
+    plt.savefig(f"{outname}_{starting_prime}.pdf", bbox_inches="tight")
+    plt.savefig(f"{outname}_{starting_prime}.svg", bbox_inches="tight")
+    plt.close()
+
 
 def main():
-    parser = argparse.ArgumentParser(description="A simple CLI tool")
-    
-    # Add parameters
-    parser.add_argument("--initial", type=str, required=True, help="Initial prime number")
-    parser.add_argument("--max", type=int, default=100000,  help="Max numbers to plot")
-
+    parser = argparse.ArgumentParser(description="Generate Ulam spirals with prime highlights")
+    parser.add_argument("--initial", type=int, required=True, help="Initial number")
+    parser.add_argument("--max", type=int, default=100000, help="Max numbers to plot")
     args = parser.parse_args()
 
-    plot_clockwise_spiral_with_primes(int(args.initial),int(args.max)) 
+    plot_clockwise_spiral_with_primes(args.initial, args.max)
+
 
 if __name__ == "__main__":
     main()
