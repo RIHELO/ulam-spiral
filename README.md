@@ -28,3 +28,7 @@ python3 plot_ulam.py --initial 55661
 python3 plot_ulam.py --initial 27941 
 python3 plot_ulam.py --initial 733939
 ```
+Plot Prime Density vs Initial Values
+```
+python3 value_percentage.py
+```
