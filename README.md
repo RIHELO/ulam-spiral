@@ -13,7 +13,7 @@ pip3 install -r requirements.txt
 
 To check the probability in a given range:
 ```
-python3 calculate_prob_ulam_prime.py  --initial 41 --max 100000 > primes.txt
+python3 calculate_prob_ulam_prime.py  --initial 1 --max 100000 > primes.txt
 ```
 
 To sort by the highest probability:
